@@ -134,4 +134,15 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         );
     }
 
+    @Override
+    public void updateEmployeeInfo(EmployeeDTO employeeDTO) {
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeDTO, employee);
+
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());
+
+        employeeMapper.update(employee, new LambdaUpdateWrapper<Employee>().eq(Employee::getId, employee.getId()));
+    }
+
 }
