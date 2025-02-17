@@ -31,20 +31,17 @@ public class Category implements Serializable {
     //分类状态 0标识禁用 1表示启用
     private Integer status;
 
-    //创建时间
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    //更新时间
-
-    @TableField(fill = FieldFill.UPDATE)
+    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    //创建人
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.INSERT)
     private Long createUser;
 
-    //修改人
-    @TableField(fill = FieldFill.UPDATE)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
 }
