@@ -14,7 +14,7 @@ public interface CategoryService extends IService<Category> {
      * 新增分类
      * @param categoryDTO
      */
-    Boolean addCategory(CategoryDTO categoryDTO);
+    int addCategory(CategoryDTO categoryDTO);
 
     /**
      * 分页查询

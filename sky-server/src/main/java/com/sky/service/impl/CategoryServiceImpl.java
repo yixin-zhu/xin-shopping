@@ -45,19 +45,19 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
      * @param categoryDTO
      */
     @Override
-    public Boolean addCategory(CategoryDTO categoryDTO) {
+    public int addCategory(CategoryDTO categoryDTO) {
         Category category = new Category();
         BeanUtils.copyProperties(categoryDTO,category);
         category.setStatus(StatusConstant.ENABLE);
         //设置当前记录的创建时间和修改时间
-        category.setCreateTime(LocalDateTime.now());
-        category.setUpdateTime(LocalDateTime.now());
+        //category.setCreateTime(LocalDateTime.now());
+        //category.setUpdateTime(LocalDateTime.now());
 
         //设置当前记录创建人id和修改人id
-        category.setCreateUser(BaseContext.getCurrentId());
-        category.setUpdateUser(BaseContext.getCurrentId());
+        //category.setCreateUser(BaseContext.getCurrentId());
+        //category.setUpdateUser(BaseContext.getCurrentId());
 
-        return this.save(category);
+        return categoryMapper.insert(category);
     }
 
     /**
@@ -110,8 +110,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         BeanUtils.copyProperties(categoryDTO,category);
 
         //设置修改时间、修改人
-        category.setUpdateTime(LocalDateTime.now());
-        category.setUpdateUser(BaseContext.getCurrentId());
+        //category.setUpdateTime(LocalDateTime.now());
+        //category.setUpdateUser(BaseContext.getCurrentId());
 
         return categoryMapper.update(category, new LambdaUpdateWrapper<Category>().eq(Category::getId, category.getId()));
     }
@@ -126,8 +126,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         category.setStatus(status);
 
         //设置修改时间、修改人
-        category.setUpdateTime(LocalDateTime.now());
-        category.setUpdateUser(BaseContext.getCurrentId());
+        //category.setUpdateTime(LocalDateTime.now());
+        //category.setUpdateUser(BaseContext.getCurrentId());
         return categoryMapper.update(category, new LambdaUpdateWrapper<Category>().eq(Category::getId, id));
     }
 

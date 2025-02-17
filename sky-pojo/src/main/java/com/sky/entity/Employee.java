@@ -1,5 +1,7 @@
 package com.sky.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -37,13 +39,17 @@ public class Employee implements Serializable {
     private Integer status;
 
     //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime createTime;
 
     //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long createUser;
 
+    @TableField(fill = FieldFill.UPDATE)
     private Long updateUser;
 
 }

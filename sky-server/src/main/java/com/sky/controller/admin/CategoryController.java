@@ -34,8 +34,8 @@ public class CategoryController {
     @ApiOperation("新增分类")
     public Result<String> addCategory(@RequestBody CategoryDTO categoryDTO){
         log.info("新增分类：{}", categoryDTO);
-        boolean success = categoryService.addCategory(categoryDTO);
-        return success ? Result.success() : Result.error("新增失败");
+        int rows = categoryService.addCategory(categoryDTO);
+        return rows > 0 ? Result.success() : Result.error("新增失败");
     }
 
     /**
