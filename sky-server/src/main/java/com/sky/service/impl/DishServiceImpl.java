@@ -11,6 +11,8 @@ import com.sky.entity.DishFlavor;
 import com.sky.entity.Employee;
 import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
+import com.sky.mapper.SetmealDishMapper;
+import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.DishService;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,6 +32,8 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
     private DishMapper dishMapper;
     @Autowired
     private DishFlavorMapper dishFlavorMapper;
+    @Autowired
+    private SetmealDishMapper setmealDishMapper;
 
     /**
      * 新增菜品和对应的口味
@@ -72,6 +77,21 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
         return new PageResult(resultPage.getTotal(), resultPage.getRecords());
     }
 
+    @Transactional
+    public boolean deleteBatch(List<Long> ids){
+        int rows = 0;
+        for(Long id : ids){
+            Dish dish = dishMapper.selectById(id);
+            if(dish.getStatus() == 1){
+                return false;
+            }
+            if(setmealDishMapper.countByDishId(id) > 0){
+                return false;
+            }
+            rows += dishMapper.deleteById(id);
+        }
 
+        return rows == ids.size();
+    }
 
 }
