@@ -112,6 +112,11 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
         return dishVO;
     }
 
+    public List<Dish> getByCategoryId(Long categoryId) {
+        List<Dish> dishList = dishMapper.selectList(new LambdaQueryWrapper<Dish>().eq(Dish::getCategoryId, categoryId));
+        return dishList;
+    }
+
     @Transactional
     public int updateWithFlavor(DishDTO dishDTO){
         Dish dish = new Dish();
