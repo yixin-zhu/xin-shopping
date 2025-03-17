@@ -54,7 +54,7 @@ public class SetmealController {
      */
     @DeleteMapping
     @ApiOperation("套餐批量删除")
-    public Result deleteBatch(@RequestBody List<Long> ids) {
+    public Result deleteBatch(@RequestParam List<Long> ids) {
         boolean result = setmealService.deleteBatch(ids);
         return result ? Result.success() : Result.error("删除失败");
     }
@@ -93,7 +93,7 @@ public class SetmealController {
      */
     @PostMapping("/status/{status}")
     @ApiOperation("套餐起售停售")
-    public Result startOrStop(@PathVariable Integer status, Long id) {
+    public Result startOrStop(@PathVariable Integer status,@RequestParam Long id) {
         boolean success = setmealService.startOrStop(status, id);
         return success ? Result.success() : Result.error("套餐起售停售操作失败");
     }

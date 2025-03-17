@@ -46,4 +46,5 @@ public interface DishService extends IService<Dish> {
     int updateWithFlavor(DishDTO dishDTO);
 
 
+    boolean startOrStop(Integer status, Long dishId);
 }

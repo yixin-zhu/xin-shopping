@@ -110,4 +110,17 @@ public class DishController {
         int row = dishService.updateWithFlavor(dishDTO);
         return row > 0 ? Result.success() : Result.error("修改菜品失败");
     }
+
+    /**
+     * 更新菜品状态
+     *
+     * @param id 菜品ID，通过路径变量传递
+     * @return 操作结果
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("菜品起售停售")
+    public Result updateDishStatus(@PathVariable Integer status, @RequestParam Long id) {
+        boolean success = dishService.startOrStop(status, id);
+        return success ? Result.success() : Result.error("菜品起售停售操作失败");
+    }
 }

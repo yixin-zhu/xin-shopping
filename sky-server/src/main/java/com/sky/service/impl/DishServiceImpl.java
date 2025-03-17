@@ -1,6 +1,7 @@
 package com.sky.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -9,6 +10,7 @@ import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
 import com.sky.entity.Employee;
+import com.sky.entity.Setmeal;
 import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealDishMapper;
@@ -140,5 +142,13 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
             });
         }
         return rows;
+    }
+
+    public boolean startOrStop(Integer status, Long dishId){
+        LambdaUpdateWrapper<Dish> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(Dish::getId, dishId)
+                .set(Dish::getStatus, status);
+
+        return this.update(updateWrapper);
     }
 }

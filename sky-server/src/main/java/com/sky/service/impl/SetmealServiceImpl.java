@@ -55,6 +55,9 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
         if (setmealDishes != null && !setmealDishes.isEmpty()) {
             setmealDishes.forEach(setmealDish -> {
                 setmealDish.setSetmealId(setMealId);
+                setmealDish.setId(setMealId);
+                setmealDish.setPrice(setmeal.getPrice());
+                setmealDish.setName(setmeal.getName());
                 setmealDishMapper.insert(setmealDish);
             });
         }
@@ -70,8 +73,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
         
         wrapper.like(name !=null, Setmeal::getName, name)
               .eq(categoryId != null, Setmeal::getCategoryId, categoryId)
-              .eq(status != null, Setmeal::getStatus, status)
-                .orderByDesc(Setmeal::getCreateTime);
+              .eq(status != null, Setmeal::getStatus, status);
 
         IPage<Setmeal> result = this.page(page, wrapper);
         return new PageResult(result.getTotal(), result.getRecords());
@@ -145,8 +147,13 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
         // 3. 重新插入套餐和菜品的关联关系
         List<SetmealDish> setmealDishes = setmealDTO.getSetmealDishes();
         if (setmealDishes != null && !setmealDishes.isEmpty()) {
-            setmealDishes.forEach(setmealDish -> setmealDish.setSetmealId(setmealId));
-            setmealDishes.forEach(setmealDish -> setmealDishMapper.insert(setmealDish));
+            setmealDishes.forEach(setmealDish -> {
+                setmealDish.setSetmealId(setmealId);
+                setmealDish.setId(setmealId);
+                setmealDish.setPrice(setmeal.getPrice());
+                setmealDish.setName(setmeal.getName());
+                setmealDishMapper.insert(setmealDish);
+            });
         }
 
         return rows;
