@@ -47,4 +47,11 @@ public interface DishService extends IService<Dish> {
 
 
     boolean startOrStop(Integer status, Long dishId);
+
+    /**
+     * 条件查询菜品和口味
+     * @param dish
+     * @return
+     */
+    List<DishVO> listWithFlavor(Dish dish);
 }
