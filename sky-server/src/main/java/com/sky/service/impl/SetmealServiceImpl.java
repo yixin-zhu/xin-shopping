@@ -56,9 +56,6 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
         if (setmealDishes != null && !setmealDishes.isEmpty()) {
             setmealDishes.forEach(setmealDish -> {
                 setmealDish.setSetmealId(setMealId);
-                setmealDish.setId(setMealId);
-                setmealDish.setPrice(setmeal.getPrice());
-                setmealDish.setName(setmeal.getName());
                 setmealDishMapper.insert(setmealDish);
             });
         }
@@ -150,9 +147,6 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
         if (setmealDishes != null && !setmealDishes.isEmpty()) {
             setmealDishes.forEach(setmealDish -> {
                 setmealDish.setSetmealId(setmealId);
-                setmealDish.setId(setmealId);
-                setmealDish.setPrice(setmeal.getPrice());
-                setmealDish.setName(setmeal.getName());
                 setmealDishMapper.insert(setmealDish);
             });
         }
@@ -186,12 +180,13 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
         return this.update(updateWrapper);
     }
 
-    public List<Setmeal> list(Setmeal setmeal) {
+    public List<Setmeal> getSetmealListById(Setmeal setmeal) {
         LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
         // 动态构建查询条件
-        queryWrapper.like(setmeal.getName() != null, Setmeal::getName, setmeal.getName())
-                .eq(setmeal.getCategoryId() != null, Setmeal::getCategoryId, setmeal.getCategoryId())
-                .eq(setmeal.getStatus() != null, Setmeal::getStatus, setmeal.getStatus());
+        Long categoryId = setmeal.getCategoryId();
+        Integer status = setmeal.getStatus();
+        queryWrapper.eq(categoryId != null, Setmeal::getCategoryId, categoryId)
+                    .eq(status != null, Setmeal::getStatus, status);
         return setmealMapper.selectList(queryWrapper); // 执行查询
     }
 

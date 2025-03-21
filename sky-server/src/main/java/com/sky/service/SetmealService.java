@@ -58,7 +58,7 @@ public interface SetmealService extends IService<Setmeal> {
          * @param setmeal
          * @return
          */
-        List<Setmeal> list(Setmeal setmeal);
+        List<Setmeal> getSetmealListById(Setmeal setmeal);
 
         /**
          * 根据id查询菜品选项
