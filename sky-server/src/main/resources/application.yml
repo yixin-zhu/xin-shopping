@@ -43,7 +43,7 @@ sky:
     admin-ttl: 31536000000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
-    user-secret-key: itxin
+    user-secret-key: itcast
     user-ttl: 31536000000
     user-token-name: authentication
 

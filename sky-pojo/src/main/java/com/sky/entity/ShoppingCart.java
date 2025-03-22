@@ -1,5 +1,6 @@
 package com.sky.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,6 +27,7 @@ public class ShoppingCart implements Serializable {
     private String name;
 
     //用户id
+    @TableField("user_id")
     private Long userId;
 
     //菜品id
