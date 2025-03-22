@@ -38,7 +38,7 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
         shoppingCart.setUserId(BaseContext.getCurrentId());
 
         //判断当前商品是否在购物车中
-        List<ShoppingCart> shoppingCartList = this.listShoppingCart(shoppingCart);
+        List<ShoppingCart> shoppingCartList = this.findShoppingItem(shoppingCart);
 
         if (shoppingCartList != null && shoppingCartList.size() == 1) {
             //如果已经存在，就更新数量，数量加1
@@ -69,7 +69,7 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
         }
     }
 
-    private List<ShoppingCart> listShoppingCart(ShoppingCart shoppingCart) {
+    private List<ShoppingCart> findShoppingItem(ShoppingCart shoppingCart) {
         LambdaQueryWrapper<ShoppingCart> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(shoppingCart.getUserId()!= null, ShoppingCart::getUserId, shoppingCart.getUserId());
         wrapper.eq(shoppingCart.getDishId() != null, ShoppingCart::getDishId, shoppingCart.getDishId());
@@ -77,4 +77,17 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
         wrapper.eq(shoppingCart.getDishFlavor() != null, ShoppingCart::getDishFlavor, shoppingCart.getDishFlavor());
         return shoppingCartMapper.selectList(wrapper);
     }
+
+    /**
+     * 查看购物车
+     *
+     * @return
+     */
+    public List<ShoppingCart> listShoppingCart() {
+        LambdaQueryWrapper<ShoppingCart> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(ShoppingCart::getUserId, BaseContext.getCurrentId());
+        return shoppingCartMapper.selectList(wrapper);
+    }
+
+
 }
