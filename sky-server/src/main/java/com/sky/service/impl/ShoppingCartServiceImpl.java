@@ -89,5 +89,12 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
         return shoppingCartMapper.selectList(wrapper);
     }
 
-
+    /**
+     * 清空购物车商品
+     */
+    public void cleanShoppingCart() {
+        LambdaQueryWrapper<ShoppingCart> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(ShoppingCart::getUserId, BaseContext.getCurrentId());
+        shoppingCartMapper.delete(wrapper);
+    }
 }

@@ -18,4 +18,9 @@ public interface ShoppingCartService extends IService<ShoppingCart> {
      * @return
      */
     List<ShoppingCart> listShoppingCart();
+
+    /**
+     * 清空购物车商品
+     */
+    void cleanShoppingCart();
 }
