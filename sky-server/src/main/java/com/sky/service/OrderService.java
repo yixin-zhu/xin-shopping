@@ -23,4 +23,11 @@ public interface OrderService extends IService<Orders> {
     boolean userCancelById(Long id);
 
     boolean repetition(Long id);
+
+    /**
+     * 条件搜索订单
+     * @param ordersPageQueryDTO
+     * @return
+     */
+    PageResult conditionSearch(OrdersPageQueryDTO ordersPageQueryDTO);
 }
