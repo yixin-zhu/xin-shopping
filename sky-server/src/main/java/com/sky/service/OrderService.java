@@ -19,4 +19,6 @@ public interface OrderService extends IService<Orders> {
     PageResult pageQuery4User(int page, int pageSize, Integer status);
 
     OrderVO details(Long id);
+
+    boolean userCancelById(Long id);
 }

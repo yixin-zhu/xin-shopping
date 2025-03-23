@@ -146,4 +146,19 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
         return orderVO;
     }
 
+    public boolean userCancelById(Long id){
+        Orders order = orderMapper.selectById(id);
+        if (order == null) {
+            return false;
+        }
+        if (order.getStatus() > Orders.TO_BE_CONFIRMED) {
+            return false;
+        }
+        order.setStatus(Orders.CANCELLED);
+        order.setCancelReason("用户取消");
+        order.setCancelTime(LocalDateTime.now());
+        orderMapper.updateById(order);
+        return true;
+    }
+
 }
