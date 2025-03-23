@@ -22,6 +22,7 @@ import com.sky.mapper.ShoppingCartMapper;
 import com.sky.result.PageResult;
 import com.sky.service.OrderService;
 import com.sky.vo.OrderSubmitVO;
+import com.sky.vo.OrderVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,6 +128,22 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
         wrapper.orderByDesc(Orders::getOrderTime);
         IPage<Orders> ordersIPage = orderMapper.selectPage(pageOfOrders, wrapper);
         return new PageResult(ordersIPage.getTotal(), ordersIPage.getRecords());
+    }
+
+    public OrderVO details(Long id){
+        Orders order = orderMapper.selectById(id);
+        if (order == null) {
+            return null;
+        }
+        OrderVO orderVO = new OrderVO();
+        BeanUtils.copyProperties(order, orderVO);
+
+        LambdaQueryWrapper<OrderDetail> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(OrderDetail::getOrderId, id);
+        List<OrderDetail> orderDetailList = orderDetailMapper.selectList(wrapper);
+        orderVO.setOrderDetailList(orderDetailList);
+
+        return orderVO;
     }
 
 }
