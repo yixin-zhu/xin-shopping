@@ -9,7 +9,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sky.constant.MessageConstant;
 import com.sky.context.BaseContext;
+import com.sky.dto.OrdersConfirmDTO;
 import com.sky.dto.OrdersPageQueryDTO;
+import com.sky.dto.OrdersRejectionDTO;
 import com.sky.dto.OrdersSubmitDTO;
 import com.sky.entity.AddressBook;
 import com.sky.entity.OrderDetail;
@@ -224,6 +226,28 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
 
         // 将该订单对应的所有菜品信息拼接在一起
         return String.join("", orderDishList);
+    }
+
+    public boolean confirm(OrdersConfirmDTO ordersConfirmDTO){
+        Orders order = orderMapper.selectById(ordersConfirmDTO.getId());
+        if (order == null) {
+            return false;
+        }
+        order.setStatus(Orders.CONFIRMED);
+        orderMapper.updateById(order);
+        return true;
+    }
+
+    public boolean rejection(OrdersRejectionDTO ordersRejectionDTO){
+        Orders order = orderMapper.selectById(ordersRejectionDTO.getId());
+        if (order == null) {
+            return false;
+        }
+        order.setStatus(Orders.CANCELLED);
+        order.setRejectionReason(ordersRejectionDTO.getRejectionReason());
+        order.setCancelTime(LocalDateTime.now());
+        orderMapper.updateById(order);
+        return true;
     }
 
 }

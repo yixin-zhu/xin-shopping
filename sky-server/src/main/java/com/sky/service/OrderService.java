@@ -30,4 +30,18 @@ public interface OrderService extends IService<Orders> {
      * @return
      */
     PageResult conditionSearch(OrdersPageQueryDTO ordersPageQueryDTO);
+
+    /**
+     * 接单
+     * @param ordersConfirmDTO
+     * @return
+     */
+    boolean confirm(OrdersConfirmDTO ordersConfirmDTO);
+
+    /**
+     * 拒单
+     * @param ordersRejectionDTO
+     * @return
+     */
+    boolean rejection(OrdersRejectionDTO ordersRejectionDTO);
 }
