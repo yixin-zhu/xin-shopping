@@ -87,4 +87,28 @@ public class OrderController {
         boolean success = orderService.cancel(ordersCancelDTO);
         return success ? Result.success() : Result.error("取消订单失败");
     }
+
+    /**
+     * 派送订单
+     *
+     * @return
+     */
+    @PutMapping("/delivery/{id}")
+    @ApiOperation("派送订单")
+    public Result delivery(@PathVariable("id") Long id) {
+        boolean success = orderService.delivery(id);
+        return success ? Result.success() : Result.error("派送订单失败");
+    }
+
+    /**
+     * 完成订单
+     *
+     * @return
+     */
+    @PutMapping("/complete/{id}")
+    @ApiOperation("完成订单")
+    public Result complete(@PathVariable("id") Long id) {
+        boolean success = orderService.complete(id);
+        return success ? Result.success() : Result.error("完成订单失败");
+    }
 }

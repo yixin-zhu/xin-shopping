@@ -259,4 +259,25 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
         return true;
     }
 
+    public boolean delivery(Long id){
+        Orders order = orderMapper.selectById(id);
+        if (order == null) {
+            return false;
+        }
+        order.setStatus(Orders.DELIVERY_IN_PROGRESS);
+        orderMapper.updateById(order);
+        return true;
+    }
+
+    public boolean complete(Long id){
+        Orders order = orderMapper.selectById(id);
+        if (order == null) {
+            return false;
+        }
+        order.setStatus(Orders.COMPLETED);
+        order.setDeliveryTime(LocalDateTime.now());
+        orderMapper.updateById(order);
+        return true;
+    }
+
 }

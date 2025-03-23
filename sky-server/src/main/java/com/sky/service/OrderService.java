@@ -51,4 +51,18 @@ public interface OrderService extends IService<Orders> {
      * @return
      */
     boolean cancel(OrdersCancelDTO ordersCancelDTO);
+
+    /**
+     * 发货
+     * @param id
+     * @return
+     */
+    boolean delivery(Long id);
+
+    /**
+     * 完成订单
+     * @param id
+     * @return
+     */
+    boolean complete(Long id);
 }
