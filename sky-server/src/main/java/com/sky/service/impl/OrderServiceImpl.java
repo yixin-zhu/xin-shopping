@@ -161,4 +161,19 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
         return true;
     }
 
+    public boolean repetition(Long id){
+        Orders order = orderMapper.selectById(id);
+        if (order == null) {
+            return false;
+        }
+        List<OrderDetail> orderDetailList = orderDetailMapper.selectList(new LambdaQueryWrapper<OrderDetail>().eq(OrderDetail::getOrderId, id));
+        for (OrderDetail orderDetail : orderDetailList) {
+            ShoppingCart shoppingCart = new ShoppingCart();
+            BeanUtils.copyProperties(orderDetail, shoppingCart);
+            shoppingCart.setUserId(BaseContext.getCurrentId());
+            shoppingCartMapper.insert(shoppingCart);
+        }
+        return true;
+    }
+
 }

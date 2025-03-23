@@ -21,4 +21,6 @@ public interface OrderService extends IService<Orders> {
     OrderVO details(Long id);
 
     boolean userCancelById(Long id);
+
+    boolean repetition(Long id);
 }
