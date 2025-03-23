@@ -2,6 +2,8 @@ package com.sky.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sky.constant.MessageConstant;
@@ -17,6 +19,7 @@ import com.sky.mapper.AddressBookMapper;
 import com.sky.mapper.OrderDetailMapper;
 import com.sky.mapper.OrderMapper;
 import com.sky.mapper.ShoppingCartMapper;
+import com.sky.result.PageResult;
 import com.sky.service.OrderService;
 import com.sky.vo.OrderSubmitVO;
 import lombok.extern.slf4j.Slf4j;
@@ -114,6 +117,16 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
                 .build();
 
         return orderSubmitVO;
+    }
+
+    public PageResult pageQuery4User(int page, int pageSize, Integer status) {
+        Page<Orders> pageOfOrders = new Page<>(page, pageSize);
+        LambdaQueryWrapper<Orders> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Orders::getUserId, BaseContext.getCurrentId());
+        wrapper.eq(status != null, Orders::getStatus, status);
+        wrapper.orderByDesc(Orders::getOrderTime);
+        IPage<Orders> ordersIPage = orderMapper.selectPage(pageOfOrders, wrapper);
+        return new PageResult(ordersIPage.getTotal(), ordersIPage.getRecords());
     }
 
 }
