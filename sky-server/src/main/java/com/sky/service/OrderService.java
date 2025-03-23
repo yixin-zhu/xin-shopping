@@ -44,4 +44,11 @@ public interface OrderService extends IService<Orders> {
      * @return
      */
     boolean rejection(OrdersRejectionDTO ordersRejectionDTO);
+
+    /**
+     * 取消订单
+     * @param ordersCancelDTO
+     * @return
+     */
+    boolean cancel(OrdersCancelDTO ordersCancelDTO);
 }

@@ -9,10 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sky.constant.MessageConstant;
 import com.sky.context.BaseContext;
-import com.sky.dto.OrdersConfirmDTO;
-import com.sky.dto.OrdersPageQueryDTO;
-import com.sky.dto.OrdersRejectionDTO;
-import com.sky.dto.OrdersSubmitDTO;
+import com.sky.dto.*;
 import com.sky.entity.AddressBook;
 import com.sky.entity.OrderDetail;
 import com.sky.entity.Orders;
@@ -245,6 +242,18 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
         }
         order.setStatus(Orders.CANCELLED);
         order.setRejectionReason(ordersRejectionDTO.getRejectionReason());
+        order.setCancelTime(LocalDateTime.now());
+        orderMapper.updateById(order);
+        return true;
+    }
+
+    public boolean cancel(OrdersCancelDTO ordersCancelDTO){
+        Orders order = orderMapper.selectById(ordersCancelDTO.getId());
+        if (order == null) {
+            return false;
+        }
+        order.setStatus(Orders.CANCELLED);
+        order.setCancelReason(ordersCancelDTO.getCancelReason());
         order.setCancelTime(LocalDateTime.now());
         orderMapper.updateById(order);
         return true;
