@@ -93,4 +93,17 @@ public class OrderController {
         return success ? Result.success() : Result.error("再来一单失败");
     }
 
+    /**
+     * 用户催单
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/reminder/{id}")
+    @ApiOperation("用户催单")
+    public Result reminder(@PathVariable("id") Long id) {
+        boolean success = orderService.reminder(id);
+        return success ? Result.success() : Result.error("催单失败");
+    }
+
 }

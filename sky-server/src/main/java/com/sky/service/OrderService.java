@@ -65,4 +65,10 @@ public interface OrderService extends IService<Orders> {
      * @return
      */
     boolean complete(Long id);
+
+    /**
+     * 用户催单
+     * @param id
+     */
+    boolean reminder(Long id);
 }
